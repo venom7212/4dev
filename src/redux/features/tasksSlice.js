@@ -165,18 +165,9 @@ export const tasksSlice = createSlice({
     //необходимо находить по уникаольному, id их надо генерировать при add
 
     updateStatusTask: (state, action) => {
-      const { tasks } = state;
-      const { titleSearch, status } = action.payload;
-      const filteredTasks = tasks.filter((task) => task.title !== titleSearch);
-      if (filteredTasks !== -1) {
-        // If the task is found, update its status
-        state.tasks[filteredTasks] = {
-          ...state.tasks[filteredTasks],
-          status: status,
-        };
-      }
-      state.tasks = filteredTasks;
-      // tasks = filteredTasks
+      const {title,status} = action.payload;
+      console.log('redux',title,status)
+      
     },
   },
 });

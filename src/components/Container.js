@@ -4,6 +4,8 @@ import OneTask from "./OneTask";
 
 const Container = ({ title,classDiv, status, tasks }) => {
 //   const { id, priority, description, schedule, author_name } = tasks;
+ const classDivStyle = `${status === 0? 'in_queue' : status === 1? 'in_progress' : status === 2?'done' :'' }`
+
 
   const genTask = () => {
       return tasks.map((item, index) => {
@@ -11,7 +13,7 @@ const Container = ({ title,classDiv, status, tasks }) => {
       });
     };
   return (
-    <div className={classDiv}>
+    <div className={classDivStyle}>
       {title}
       {genTask()}
     </div>

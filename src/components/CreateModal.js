@@ -9,7 +9,10 @@ const CreateModal = ({ onClose }) => {
   const statusTask = useSelector((state) => state.state.status);
   const priorityTask = useSelector((state) => state.state.priority);
 
-  const [id, setId] = useState("");
+  const lastObject = tasks[tasks.length - 1];
+  const lastId = parseInt(lastObject.id)
+
+  const [id, setId] = useState(lastId+1);
   const [status, setStatus] = useState("в очереди");
   const [priority, setPriority] = useState("низкий");
   const [title, setTitle] = useState("");
@@ -34,18 +37,23 @@ const CreateModal = ({ onClose }) => {
 
   const addTask = () => {
     const oneTask = {
-      id: id,
+      id: id.toString(),
       status: status,
       priority: priority,
       title: title,
       description: description,
       author_name: authorName,
-      schedule:{creation_time:"2023-08-01T09:15:00"}
+      schedule: { creation_time: "2023-08-01T09:15:00" },
     };
     dispatch(addTasks(oneTask));
     console.log(tasks);
     console.log("add");
   };
+
+
+  useEffect(() => {
+    setId(lastId+1)
+    },[tasks]);
 
   // authors,setAuthorName
   const universalGen = (array, setter) => {
@@ -53,12 +61,12 @@ const CreateModal = ({ onClose }) => {
       const firstKey = Object.keys(item)[0];
       const firstValue = Object.values(item)[0];
       return (
-        <a
+        <div
           key={index}
           onClick={() => inputHandlerDropDownUniversal(firstValue, setter)}
         >
           {firstValue}
-        </a>
+        </div>
       );
     });
   };
@@ -113,7 +121,7 @@ const CreateModal = ({ onClose }) => {
                 : "в очереди"}
             </button>
             <div className="dropdown-content">
-            {universalGen(statusTask, setStatus)}
+              {universalGen(statusTask, setStatus)}
               {/* <a onClick={(e) => setStatus(0)}>в очереди</a>
               <a onClick={(e) => setStatus(1)}>в работе</a>
               <a onClick={(e) => setStatus(2)}>выполнено</a> */}
@@ -134,7 +142,7 @@ const CreateModal = ({ onClose }) => {
                 : "низкий"}
             </button>
             <div className="dropdown-content">
-            {universalGen(priorityTask, setPriority)}
+              {universalGen(priorityTask, setPriority)}
 
               {/* <a onClick={(e) => inputHandlerDropDown(e, setPriority)}>
                 низкий

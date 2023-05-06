@@ -12,17 +12,16 @@ const TasksBoard = () => {
   const status = [
     {
       title: "В ОЧЕРЕДИ",
-      classDiv: "in_queue",
       status: 0,
     },
     {
       title: "В РАБОТЕ",
-      classDiv: "in_progress",
+    
+
       status: 1,
     },
     {
       title: "ВЫПОЛНЕНО",
-      classDiv: "done",
       status: 2,
     },
   ];
@@ -37,12 +36,11 @@ const TasksBoard = () => {
 
   const filterTask = () => {
     return status.map((item, index) => {
-      const { title, status, classDiv } = item;
+      const { title, status } = item;
       const filteredTasks = tasks.filter((item) => item.status === status);
       return (
         <Container
           key={index}
-          classDiv={classDiv}
           title={title}
           status={status}
           tasks={filteredTasks}

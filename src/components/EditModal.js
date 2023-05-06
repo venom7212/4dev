@@ -27,12 +27,12 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
       const firstKey = Object.keys(item)[0];
       const firstValue = Object.values(item)[0];
       return (
-        <a
+        <div
           key={index}
-          onClick={() => {inputHandlerDropDownUniversal(firstValue, setter);dispatch(updateStatusTask(title,statusState))}}
+          onClick={() => {inputHandlerDropDownUniversal(firstValue, setter);dispatch(updateStatusTask(title,status))}}
         >
           {firstValue}
-        </a>
+        </div>
       );
     });
   };

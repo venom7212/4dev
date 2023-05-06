@@ -135,7 +135,7 @@
 }
 
 /* Стили для ссылок в выпадающем контенте при наведении */
-.dropdown-content a:hover {
+.dropdown-content div:hover {
   background-color: #ddd;
 }
 
