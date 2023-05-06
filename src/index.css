@@ -148,3 +148,8 @@
 .dropdown:hover .dropbtn {
   background-color: #3e8e41;
 }
+
+.one_task_img{
+  height: 40px;
+  width: 40px;
+}
