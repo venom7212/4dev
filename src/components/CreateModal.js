@@ -2,46 +2,41 @@ import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addTasks } from "../redux/features/tasksSlice";
+import decline from "../img/decline.jpg";
+import save from "../img/save.jpg";
 
 const CreateModal = ({ onClose }) => {
+  const dispatch = useDispatch();
   const tasks = useSelector((state) => state.state.tasks);
   const authors = useSelector((state) => state.state.authors);
-  const statusTask = useSelector((state) => state.state.status);
-  const priorityTask = useSelector((state) => state.state.priority);
+  const statuses = useSelector((state) => state.state.statuses);
+  const priorities = useSelector((state) => state.state.priorities);
 
-  const lastObject = tasks[tasks.length - 1];
-  const lastId = parseInt(lastObject.id)
-
-  const [id, setId] = useState(lastId+1);
-  const [status, setStatus] = useState(0);
-  const [priority, setPriority] = useState(0);
+  const [id, setId] = useState(tasks.length);
+  const [status, setStatus] = useState("");
+  const [priority, setPriority] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [authorName, setAuthorName] = useState("John Smith");
-
-  const dispatch = useDispatch();
+  const [authorName, setAuthorName] = useState("");
 
   const inputHandler = (e, setter) => {
     const value = e.currentTarget.value;
     setter(value);
   };
 
-  const inputHandlerDropDown = (e, setter) => {
-    const value = e.target.innerText;
-    setter(value);
-  };
-
-  const inputHandlerDropDownUniversal = (firstKey, setter) => {
-    setter(firstKey);
-    console.log(status,'status')
-    console.log(priority,'priority')
-  };
-
   const addTask = () => {
+    const foundStatus = statuses.find((item, index) => item[index] == status);
+    const statusId = Object.keys(foundStatus)[0];
+
+    const foundPriority = priorities.find(
+      (item, index) => item[index] == priority
+    );
+    const priorityId = Object.keys(foundPriority)[0];
+
     const oneTask = {
       id: id.toString(),
-      status: status,
-      priority: priority,
+      status: Number(statusId),
+      priority: Number(priorityId),
       title: title,
       description: description,
       author_name: authorName,
@@ -50,31 +45,23 @@ const CreateModal = ({ onClose }) => {
     dispatch(addTasks(oneTask));
     console.log(tasks);
     console.log("add");
+    onClose();
   };
 
-
   useEffect(() => {
-    setId(lastId+1)
-    },[tasks]);
+    setId(tasks.length);
+  }, [tasks]);
 
-  // authors,setAuthorName
-  const universalGen = (array, setter) => {
+  const getDropdownItems = (array, setter) => {
     return array.map((item, index) => {
-      const firstKey = Object.keys(item)[0];
-      const firstValue = Object.values(item)[0];
+      const [_, value] = Object.entries(item)[0];
       return (
-        <div
-          key={index}
-          onClick={() => inputHandlerDropDownUniversal(firstValue, setter)}
-        >
-          {firstKey}
+        <div key={index} onClick={() => setter(value)}>
+          {value}
         </div>
       );
     });
   };
-
-  //     - schedule {Object}
-  //   - creation_time {string} // Дата создания задачи в формате YYYY-MM-DDTHH:MM:SS
 
   return (
     <div
@@ -98,7 +85,7 @@ const CreateModal = ({ onClose }) => {
           <div className="dropdown">
             <button className="dropbtn">{authorName}</button>
             <div className="dropdown-content">
-              {universalGen(authors, setAuthorName)}
+              {getDropdownItems(authors, setAuthorName)}
             </div>
           </div>
         </div>
@@ -112,61 +99,33 @@ const CreateModal = ({ onClose }) => {
         <div className="modal_input">
           <div className="modal_status">Cостояние: </div>
           <div className="dropdown">
-            <button className="dropbtn">
-              {/* {status} */}
-              {status === 0
-                ? "в очереди"
-                : status === 1
-                ? "в работе"
-                : status === 2
-                ? "выполнено"
-                : "в очереди"}
-            </button>
+            <button className="dropbtn">{status}</button>
             <div className="dropdown-content">
-              {universalGen(statusTask, setStatus)}
-              {/* <a onClick={(e) => setStatus(0)}>в очереди</a>
-              <a onClick={(e) => setStatus(1)}>в работе</a>
-              <a onClick={(e) => setStatus(2)}>выполнено</a> */}
+              {getDropdownItems(statuses, setStatus)}
             </div>
           </div>
         </div>
         <div className="modal_input">
           <div className="modal_priority">Приоритет: {}</div>
           <div className="dropdown">
-            <button className="dropbtn">
-              {/* {priority} */}
-              {priority === 0
-                ? "низий"
-                : priority === 1
-                ? "средний"
-                : priority === 2
-                ? "высокий"
-                : "низкий"}
-            </button>
+            <button className="dropbtn">{priority}</button>
             <div className="dropdown-content">
-              {universalGen(priorityTask, setPriority)}
-
-              {/* <a onClick={(e) => inputHandlerDropDown(e, setPriority)}>
-                низкий
-              </a>
-              <a onClick={(e) => inputHandlerDropDown(e, setPriority)}>
-                средний
-              </a>
-              <a onClick={(e) => inputHandlerDropDown(e, setPriority)}>
-                высокий
-              </a> */}
+              {getDropdownItems(priorities, setPriority)}
             </div>
           </div>
         </div>
-
-        <button onClick={onClose}>ОТМЕНА</button>
-        <button
-          onClick={() => {
-            addTask();
-          }}
-        >
-          СОХРАНИТЬ
-        </button>
+        <div className="modul_footer">
+          <div onClick={onClose}>
+            <img className="modul_btn" src={decline} alt="" />
+          </div>
+          <div
+            onClick={() => {
+              addTask();
+            }}
+          >
+            <img className="modul_btn" src={save} alt="" />
+          </div>
+        </div>
       </div>
     </div>
   );

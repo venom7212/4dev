@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-// import Deck from "./Deck";
-
-import { deleteTask, updateStatusTask } from "../redux/features/tasksSlice.js";
+import { deleteTask, updateTask } from "../redux/features/tasksSlice.js";
 // import Detected from "./Detected";
+import deleteJPG from "../img/deleteJPG.jpg";
+import save from "../img/save.jpg";
 
 const EditModal = ({ active, closeModal, data, onClose }) => {
   const { id, status, priority, title, description, schedule, author_name } =
     data;
-  const statusTask = useSelector((state) => state.state.status);
-  const priorityTask = useSelector((state) => state.state.priority);
+  const statuses = useSelector((state) => state.state.statuses);
+  const priorities = useSelector((state) => state.state.priorities);
 
   const [statusState, setStatus] = useState(status);
   const [priorityState, setPriority] = useState(priority);
@@ -20,22 +20,21 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
 
   const inputHandlerDropDownUniversal = (firstValue, setter) => {
     setter(firstValue);
-    console.log("statusState",statusState)
-    console.log("priorityState",priorityState)
+    console.log("statusState", statusState);
+    console.log("priorityState", priorityState);
   };
 
   const universalGen = (array, setter) => {
     return array.map((item, index) => {
-      const firstKey = Object.keys(item)[0];
-      const firstValue = Object.values(item)[0];
+      const [key, value] = Object.entries(item)[0];
       return (
         <div
           key={index}
           onClick={() => {
-            inputHandlerDropDownUniversal(firstValue, setter);
+            inputHandlerDropDownUniversal(key, setter);
           }}
         >
-          {firstKey}
+          {value}
         </div>
       );
     });
@@ -66,7 +65,7 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
                 : "в очереди"}
             </button>
             <div className="dropdown-content">
-              {universalGen(statusTask, setStatus)}
+              {universalGen(statuses, setStatus)}
             </div>
           </div>
         </div>
@@ -83,29 +82,31 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
                 : "низкий"}
             </button>
             <div className="dropdown-content">
-              {universalGen(priorityTask, setPriority)}
+              {universalGen(priorities, setPriority)}
             </div>
           </div>
         </div>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            dispatch(deleteTask(id));
-            console.log("del");
-            onClose();
-          }}
-        >
-          УДАЛИТЬ
-        </button>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            dispatch(updateStatusTask({id,statusState,priorityState}));
-            onClose();
-          }}
-        >
-          СОХРАНИТЬ
-        </button>
+        <div className="modul_footer">
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch(deleteTask(id));
+              console.log("del");
+              onClose();
+            }}
+          >
+            <img className="modul_btn" src={deleteJPG} alt="" />
+          </div>
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch(updateTask({ id, statusState, priorityState }));
+              onClose();
+            }}
+          >
+            <img className="modul_btn" src={save} alt="" />
+          </div>
+        </div>
       </div>
     </div>
   );

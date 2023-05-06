@@ -12,8 +12,7 @@ body {
   justify-content: center;
 }
 
-.App {
-}
+.App {}
 
 .login_form {
   display: flex;
@@ -23,12 +22,14 @@ body {
   /* align-items: center; */
   border: 1px solid;
 }
+
 .error {
   display: flex;
   flex-direction: column;
   width: 320px;
   border: 1px solid;
 }
+
 .auth {
   border: 1px solid;
   display: flex;
@@ -50,30 +51,43 @@ body {
   margin-left: 20px;
   margin-right: 20px;
 }
+
 .tasks {
   display: flex;
   flex-direction: column;
-  border: 1px solid;
+  padding: 6px;
 }
+
 .all_task {
   display: flex;
   border: 1px solid;
+  padding: 6px;
+  gap: 6px;
 }
+
 .in_queue {
   border: 1px solid;
+  padding: 6px;
 }
+
 .in_progress {
   border: 1px solid;
+  padding: 6px;
 }
+
 .done {
   border: 1px solid;
+  padding: 6px;
 }
+
 .one_task {
   display: flex;
   flex-direction: column;
   border: 1px solid;
+  border-radius: 4px;
   margin-top: 20px;
 }
+
 .one_task_header {
   display: flex;
 }
@@ -86,20 +100,25 @@ body {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-around;
+  align-items: flex-start;
 }
+
 .modal_body {
   width: 320px;
   background-color: white;
+  margin-top: 100px;
 }
+
 .modal_input {
   display: flex;
 }
+
 .modal_input {
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
 .modul_select {
   display: flex;
   width: 100px;
@@ -126,10 +145,6 @@ body {
   cursor: pointer;
 }
 
-.dropdown {
-  width: 160px;
-}
-
 /* Стили для выпадающего контента */
 .dropdown-content {
   display: none;
@@ -137,14 +152,16 @@ body {
   background-color: #f1f1f1;
   min-width: 160px;
   z-index: 1;
+  cursor: pointer;
 }
 
 /* Стили для ссылок в выпадающем контенте */
-.dropdown-content a {
+.dropdown-content div {
   color: black;
   /* padding: 12px 16px; */
   text-decoration: none;
   display: block;
+  cursor: pointer;
 }
 
 /* Стили для ссылок в выпадающем контенте при наведении */
@@ -159,13 +176,15 @@ body {
 
 /* Скрыть выпадающий контент, когда курсор покидает кнопку */
 .dropdown:hover .dropbtn {
-  background-color: #3e8e41;
+  background-color: hsla(233, 80%, 41%, 0.228);
 }
+
 
 .one_task_img {
   height: 40px;
   width: 40px;
 }
+
 .tasks_header {
   border: solid 1px black;
   display: flex;

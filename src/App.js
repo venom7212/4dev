@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Login from "./components/Login";
 import TasksBoard from "./components/TasksBoard";
 import Error from "./components/Error";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate,useLocation } from "react-router-dom";
 import { setIsAuthorized } from "../src/redux/features/tasksSlice";
 
 const App = () => {
@@ -14,6 +14,7 @@ const App = () => {
   const loginCheck = localStorage.getItem("current_login") !== null;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     if (loginCheck === true) {
@@ -26,6 +27,14 @@ const App = () => {
       navigate("/tasks");
     }
   }, [isAuthorized]);
+
+  useEffect(() => {
+    const loginCheck = localStorage.getItem('current_login')!== null;
+    if (location.pathname === "/tasks" && loginCheck===false) {
+      navigate("/error");
+    }
+  }, [location]);
+
 
   return (
     <div className="App">

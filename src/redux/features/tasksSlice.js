@@ -5,10 +5,8 @@ export const tasksSlice = createSlice({
   initialState: {
     isAuthorized: false,
     users: [{ login: "admin", password: "admin" }],
-    // status: [{ 0: "в очереди" }, { 1: "в работе" }, { 2: "выполнено" }],
-    status: [{ "в очереди": 0 }, { "в работе": 1 }, { "выполнено": 2 }],
-    // priority: [{ 0: "низкий" }, { 1: "средний" }, { 2: "высокий" }],
-    priority: [{ низкий: 0 }, { средний: 1 }, { высокий: 2 }],
+    priorities: [{ 0: "низкий" }, { 1: "средний" }, { 2: "высокий" }],
+    statuses: [{ 0: "в очереди" }, { 1: "в работе" }, { 2: "выполнено" }],
     tasks: [
       {
         id: "001",
@@ -165,7 +163,7 @@ export const tasksSlice = createSlice({
       // tasks = filteredTasks
     },
 
-    updateStatusTask: (state, action) => {
+    updateTask: (state, action) => {
       // const  id = action.payload;
       const { id, statusState,priorityState } = action.payload;
       const taskIndex = state.tasks.findIndex((task) => task.id === id);
@@ -181,7 +179,7 @@ export const tasksSlice = createSlice({
   },
 });
 
-export const { setIsAuthorized, addTasks, deleteTask, updateStatusTask } =
+export const { setIsAuthorized, addTasks, deleteTask, updateTask } =
   tasksSlice.actions;
 
 export default tasksSlice.reducer;
