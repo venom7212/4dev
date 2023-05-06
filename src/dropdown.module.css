@@ -4,7 +4,7 @@
    min-height: 21px;
   color: rgb(0, 0, 0);
   /* padding: 16px; */
-  font-size: 16px;
+  font-size: 13px;
   border: none;
   cursor: pointer;
 }
@@ -33,7 +33,7 @@
 }
 
 .currentSelected {
-  background: #f1f1f1;
+  background: #1226fb5f;
 }
 
 /* Change color of dropdown links on hover */
@@ -46,6 +46,8 @@
 .dropdown:hover .dropdownContent {
   display: block;
   cursor: pointer;
+  font-size: 13px;
+
   
 
 }

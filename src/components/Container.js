@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import OneTask from "./OneTask";
+import DropDown from "./DropDown";
 
 const Container = ({ title, status, tasks }) => {
-  const [filter, setFilter] = useState(true);
+  const [filter, setFilter] = useState("По дате (возрастание)");
+
+  const filterList = [{increase:"По дате (возрастание)"},{decrease:"По дате (убывание)"}]
   const classDivStyle = `${
     status === 0
       ? "in_queue"
@@ -13,20 +16,20 @@ const Container = ({ title, status, tasks }) => {
       : ""
   }`;
 
-  const changerFilter = () => {
-    setFilter(!filter);
-  };
+  // const changerFilter = () => {
+  //   setFilter(!filter);
+  // };
 
   const genTask = () => {
     return tasks
       .sort((a, b) => {
-        if (filter === false) {
+        if (filter === "По дате (возрастание)") {
           return Date.parse(a.schedule.creation_time) >
             Date.parse(b.schedule.creation_time)
             ? -1
             : 1;
         }
-        if (filter === true) {
+        if (filter === "По дате (убывание)") {
           return Date.parse(a.schedule.creation_time) <
             Date.parse(b.schedule.creation_time)
             ? -1
@@ -37,17 +40,23 @@ const Container = ({ title, status, tasks }) => {
         return <OneTask data={item} key={index} />;
       });
   };
+  const getDropdownItems = (array, setter, state) => {
+    return (
+      <DropDown options={array} selectedOption={state} setOption={setter} />
+    );
+  };
 
   return (
     <div className={classDivStyle}>
       <div className="one_task_header">{title}</div>
-      <button
+      {/* <button
         onClick={() => {
           changerFilter();
         }}
       >
         SORT
-      </button>
+      </button> */}
+      {getDropdownItems(filterList, setFilter, filter)}
       {genTask()}
     </div>
   );
