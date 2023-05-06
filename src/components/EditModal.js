@@ -5,6 +5,7 @@ import { deleteTask, updateTask } from "../redux/features/tasksSlice.js";
 // import Detected from "./Detected";
 import deleteJPG from "../img/deleteJPG.jpg";
 import save from "../img/save.jpg";
+import DropDown from "./DropDown";
 
 const EditModal = ({ active, closeModal, data, onClose }) => {
   const { id, status, priority, title, description, schedule, author_name } =
@@ -13,36 +14,31 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
   const priorities = useSelector((state) => state.state.priorities);
   const tasks = useSelector((state) => state.state.tasks);
 
-  const [statusState, setStatus] = useState(status);
-  const [priorityState, setPriority] = useState(priority);
-
+  const [statusState, setStatus] = useState("");
+  const [priorityState, setPriority] = useState("");
 
   const dispatch = useDispatch();
-  // console.log("editmodal", data);
 
-  const inputHandlerDropDownUniversal = (firstValue, setter) => {
-    setter(parseInt(firstValue));
-    console.log("statusState", statusState);
-    console.log("priorityState", priorityState);
-    console.log("tasks", tasks);
+  const updateTaskFunction = () => {
+    const foundStatus = statuses.find(
+      (item, index) => item[index] == statusState
+    );
+    const statusId = Number(Object.keys(foundStatus)[0]);
+
+    const foundPriority = priorities.find(
+      (item, index) => item[index] == priorityState
+    );
+    const priorityId = Number(Object.keys(foundPriority)[0]);
+
+    dispatch(updateTask({ id, statusId, priorityId }));
   };
 
-  const universalGen = (array, setter) => {
-    return array.map((item, index) => {
-      const [key, value] = Object.entries(item)[0];
-      
-      return (
-        <div
-          key={index}
-          onClick={() => {
-            inputHandlerDropDownUniversal(key, setter);
-          }}
-        >
-          {value}
-        </div>
-      );
-    });
+  const getDropdownItems = (array, setter, state) => {
+    return (
+      <DropDown options={array} selectedOption={state} setOption={setter} />
+    );
   };
+
 
   return (
     <div
@@ -57,23 +53,40 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
         <div className="modal_author_name">Исполнитель: {author_name}</div>
         <div className="modal_content">Описание задачи: </div>
         <div className="modal_content_text">{description}</div>
+
         <div className="modal_input">
           <div className="modal_status">Cостояние: </div>
           <div className="dropdown">
-            <button className="dropbtn">{statusState === 0 ? "в очереди" : statusState === 1 ? "в работе" : statusState === 2 ? "выполнено" : ""}</button>
+            {/* <button className="dropbtn">
+              {statusState === 0
+                ? "в очереди"
+                : statusState === 1
+                ? "в работе"
+                : statusState === 2
+                ? "выполнено"
+                : ""}
+            </button>
             <div className="dropdown-content">
-              {universalGen(statuses, setStatus)}
-              {/* {getDropdownItems(authors, setAuthorName)} */}
-            </div>
+               {getDropdownItems(authors, setAuthorName)} 
+            </div> */}
+            {getDropdownItems(statuses, setStatus, statusState)}
           </div>
         </div>
         <div className="modal_input">
           <div className="modal_priority">Приоритет: {}</div>
           <div className="dropdown">
-          <button className="dropbtn">{priorityState === 0 ? "низкий" : priorityState === 1 ? "средний" : priorityState === 2 ? "высокий" : ""}</button>
+            {/* <button className="dropbtn">
+              {priorityState === 0
+                ? "низкий"
+                : priorityState === 1
+                ? "средний"
+                : priorityState === 2
+                ? "высокий"
+                : ""}
+            </button>
             <div className="dropdown-content">
-              {universalGen(priorities, setPriority)}
-            </div>
+            </div> */}
+            {getDropdownItems(priorities, setPriority, priorityState)}
           </div>
         </div>
         <div className="modul_footer">
@@ -90,7 +103,8 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
           <div
             onClick={(e) => {
               e.stopPropagation();
-              dispatch(updateTask({ id, statusState, priorityState }));
+              // dispatch(updateTask({ id, statusState, priorityState }));
+              updateTaskFunction();
               onClose();
             }}
           >

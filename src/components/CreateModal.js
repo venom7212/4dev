@@ -26,68 +26,61 @@ const CreateModal = ({ onClose }) => {
   };
 
   const addTask = () => {
-    const date = new Date();
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const hrs = date.getHours();
-    const minutes = date.getMinutes();
-    const preparedDate = `${year}-${month < 10 ? 0 : ""}${month}-${
-      day < 10 ? 0 : ""
-    }${day}'T'${hrs}:${minutes}`;
-    // schedule: { creation_time: "2023-08-01T09:15:00" },
-    const foundStatus = statuses.find((item, index) => item[index] == status);
-    const statusId = Object.keys(foundStatus)[0];
-
-    const foundPriority = priorities.find(
-      (item, index) => item[index] == priority
-    );
-    const priorityId = Object.keys(foundPriority)[0];
-
-    const oneTask = {
-      id: id.toString(),
-      status: Number(statusId),
-      priority: Number(priorityId),
-      title: title,
-      description: description,
-      author_name: authorName,
+    if (
+      status === "" ||
+      priority === "" ||
+      title === "" ||
+      description === "" ||
+      authorName === ""
+    ) {
+      alert("Заполните все поля");
+    } else {
+      const date = new Date();
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      const hrs = date.getHours();
+      const minutes = date.getMinutes();
+      const seconds = date.getSeconds();
+      const preparedDate = `${year}-${month < 10 ? 0 : ""}${month}-${
+        day < 10 ? 0 : ""
+      }${day}T${hrs < 10 ? 0 : ""}${hrs}:${minutes < 10 ? 0 : ""}${minutes}:${seconds < 10 ? 0 : ""}${seconds}`;
       // schedule: { creation_time: "2023-08-01T09:15:00" },
-      schedule: { creation_time: preparedDate },
-    };
 
-    dispatch(addTasks(oneTask));
-    console.log(tasks);
-    console.log("add");
-    onClose();
+      const foundStatus = statuses.find((item, index) => item[index] == status);
+      const statusId = Object.keys(foundStatus)[0];
+
+      const foundPriority = priorities.find(
+        (item, index) => item[index] == priority
+      );
+      const priorityId = Object.keys(foundPriority)[0];
+
+      const oneTask = {
+        id: id.toString(),
+        status: Number(statusId),
+        priority: Number(priorityId),
+        title: title,
+        description: description,
+        author_name: authorName,
+        // schedule: { creation_time: "2023-08-01T09:15:00" },
+        schedule: { creation_time: preparedDate },
+      };
+
+      dispatch(addTasks(oneTask));
+      console.log(tasks);
+      console.log("add");
+      onClose();
+    }
   };
 
   useEffect(() => {
-    setId(tasks.length);
+    setId(tasks.length + 1);
   }, [tasks]);
-  const [selectedOption, setSelectedOption] = useState("");
 
-  const getDropdownItems2 = (array, setter,state) => {
-    // const [_, value] = Object.entries(item)[0];
+  const getDropdownItems = (array, setter, state) => {
     return (
-      <DropDown
-        options={array}
-        selectedOption={state}
-        setOption={setter}
-      />
-      // <div key={index} onClick={() => setter(value)}>
-      //   {value}
-      // </div>
+      <DropDown options={array} selectedOption={state} setOption={setter} />
     );
-  };
-  const getDropdownItems = (array, setter) => {
-    return array.map((item, index) => {
-      const [_, value] = Object.entries(item)[0];
-      return (
-        <div key={index} onClick={() => setter(value)}>
-          {value}
-        </div>
-      );
-    });
   };
 
   return (
@@ -113,8 +106,7 @@ const CreateModal = ({ onClose }) => {
             {/* <button className="dropbtn">{authorName}</button> */}
             {/* <div className="dropdown-content">
             </div> */}
-            {getDropdownItems2(authors, setAuthorName,authorName)}
-
+            {getDropdownItems(authors, setAuthorName, authorName)}
           </div>
         </div>
         <div className="modal_content_textarea">
@@ -130,8 +122,7 @@ const CreateModal = ({ onClose }) => {
             {/* <button className="dropbtn">{status}</button> */}
             {/* <div className="dropdown-content">
             </div> */}
-            {getDropdownItems2(statuses, setStatus,status)}
-
+            {getDropdownItems(statuses, setStatus, status)}
           </div>
         </div>
         <div className="modal_input">
@@ -140,8 +131,7 @@ const CreateModal = ({ onClose }) => {
             {/* <button className="dropbtn">{priority}</button> */}
             {/* <div className="dropdown-content">
             </div> */}
-            {getDropdownItems2(priorities, setPriority,priority)}
-
+            {getDropdownItems(priorities, setPriority, priority)}
           </div>
         </div>
 

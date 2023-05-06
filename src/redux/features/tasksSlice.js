@@ -165,13 +165,14 @@ export const tasksSlice = createSlice({
 
     updateTask: (state, action) => {
       // const  id = action.payload;
-      const { id, statusState,priorityState } = action.payload;
+      const { id, statusId,priorityId } = action.payload;
+      console.log(id,statusId,priorityId)
       const taskIndex = state.tasks.findIndex((task) => task.id === id);
       if (taskIndex !== -1) {
         state.tasks[taskIndex] = {
           ...state.tasks[taskIndex],
-          status: statusState,
-          priority: priorityState,
+          status: statusId,
+          priority: priorityId,
         };
       }
       return state;

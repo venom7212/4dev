@@ -43,6 +43,7 @@ const TasksBoard = () => {
           title={title}
           status={status}
           tasks={filteredTasks}
+          
         />
       );
     });
