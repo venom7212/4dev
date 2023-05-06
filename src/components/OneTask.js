@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
-// import { useSelector, useDispatch } from "react-redux";
 import EditModal from "./EditModal";
-import red from "../img/red.jpg"
-import orange from "../img/orange.jpg"
-import green from "../img/green.jpg"
+import red from "../img/red.jpg";
+import orange from "../img/orange.jpg";
+import green from "../img/green.jpg";
+
 const OneTask = ({ data }) => {
-  const { id, status, priority, title, description, schedule, author_name } =
+  const { priority, title, author_name } =
     data;
   const [active, setActive] = useState(false);
-
 
   const closeModal = useCallback(() => {
     setActive(false);
@@ -17,12 +16,25 @@ const OneTask = ({ data }) => {
   return (
     <div onClick={() => setActive(true)} className="one_task">
       <div className="one_task_header">
-        {/* <div>{status}</div> */}
-        <img className="one_task_img" src={priority === 0? green : priority === 1? orange : priority === 2? red :'' } alt=""/>
+        <img
+          className="one_task_img"
+          src={
+            priority === 0
+              ? green
+              : priority === 1
+              ? orange
+              : priority === 2
+              ? red
+              : ""
+          }
+          alt=""
+        />
         <div>{title}</div>
       </div>
       <div>{author_name}</div>
-      {active === true ? <EditModal data={data} active={active} onClose={closeModal} /> : null}
+      {active === true ? (
+        <EditModal data={data} active={active} onClose={closeModal} />
+      ) : null}
     </div>
   );
 };

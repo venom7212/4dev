@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "../dropdown.module.css";
 
-// const DropDown = ({ options, selectedOption, setOption }) => {
   const DropDown = ({ options, selectedOption, setOption }) => {
 
-
-
   return (
-
     <div className={styles.dropdown}>
       <button className={styles.dropbtn}>{selectedOption}</button>
       <div className={styles.dropdownContent}>
@@ -20,7 +16,6 @@ import styles from "../dropdown.module.css";
               key={ind}
               onClick={() => setOption(opt[Object.keys(opt)[0]])}
             >
-              {/* {opt.author_name} */}
               {opt[Object.keys(opt)[0]]}
             </div>
           ))}

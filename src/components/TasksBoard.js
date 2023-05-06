@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { BrowserRouter, Route, Switch, useNavigate } from "react-router-dom";
 import CreateModal from "./CreateModal";
 import Container from "./Container";
 import createIcon from "../img/cross.jpg";
 
 const TasksBoard = () => {
   const tasks = useSelector((state) => state.state.tasks);
-  const isAuthorized = useSelector((state) => state.state.isAuthorized);
-
+  const [active, setActive] = useState(false);
   const status = [
     {
       title: "В ОЧЕРЕДИ",
@@ -25,13 +23,9 @@ const TasksBoard = () => {
     },
   ];
 
-  const [active, setActive] = useState(false);
-
   const closeModal = useCallback(() => {
     setActive(false);
   }, [setActive]);
-
-  const navigate = useNavigate();
 
   const filterTask = () => {
     return status.map((item, index) => {
@@ -43,7 +37,6 @@ const TasksBoard = () => {
           title={title}
           status={status}
           tasks={filteredTasks}
-          
         />
       );
     });

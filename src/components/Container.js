@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
-// import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
 import OneTask from "./OneTask";
 
-const Container = ({ title, classDiv, status, tasks }) => {
-  const { id, priority, description, schedule, author_name } = tasks;
+const Container = ({ title, status, tasks }) => {
   const [filter, setFilter] = useState(true);
   const classDivStyle = `${
     status === 0
@@ -15,21 +13,22 @@ const Container = ({ title, classDiv, status, tasks }) => {
       : ""
   }`;
 
-  const changerFilter = () =>{
-    setFilter(!filter)
-  }
-
+  const changerFilter = () => {
+    setFilter(!filter);
+  };
 
   const genTask = () => {
     return tasks
       .sort((a, b) => {
         if (filter === false) {
-          return Date.parse(a.schedule.creation_time) > Date.parse(b.schedule.creation_time)
+          return Date.parse(a.schedule.creation_time) >
+            Date.parse(b.schedule.creation_time)
             ? -1
             : 1;
         }
         if (filter === true) {
-          return Date.parse(a.schedule.creation_time) < Date.parse(b.schedule.creation_time)
+          return Date.parse(a.schedule.creation_time) <
+            Date.parse(b.schedule.creation_time)
             ? -1
             : 1;
         }
@@ -39,11 +38,16 @@ const Container = ({ title, classDiv, status, tasks }) => {
       });
   };
 
-
   return (
     <div className={classDivStyle}>
       <div className="one_task_header">{title}</div>
-      <button onClick={()=>{changerFilter()}}>SORT</button>
+      <button
+        onClick={() => {
+          changerFilter();
+        }}
+      >
+        SORT
+      </button>
       {genTask()}
     </div>
   );

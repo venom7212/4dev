@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addTasks } from "../redux/features/tasksSlice";
+import { addTask } from "../redux/features/tasksSlice";
 import decline from "../img/decline.jpg";
 import save from "../img/save.jpg";
 import DropDown from "./DropDown";
@@ -25,7 +24,7 @@ const CreateModal = ({ onClose }) => {
     setter(value);
   };
 
-  const addTask = () => {
+  const taskFormation = () => {
     if (
       status === "" ||
       priority === "" ||
@@ -44,7 +43,9 @@ const CreateModal = ({ onClose }) => {
       const seconds = date.getSeconds();
       const preparedDate = `${year}-${month < 10 ? 0 : ""}${month}-${
         day < 10 ? 0 : ""
-      }${day}T${hrs < 10 ? 0 : ""}${hrs}:${minutes < 10 ? 0 : ""}${minutes}:${seconds < 10 ? 0 : ""}${seconds}`;
+      }${day}T${hrs < 10 ? 0 : ""}${hrs}:${minutes < 10 ? 0 : ""}${minutes}:${
+        seconds < 10 ? 0 : ""
+      }${seconds}`;
       // schedule: { creation_time: "2023-08-01T09:15:00" },
 
       const foundStatus = statuses.find((item, index) => item[index] == status);
@@ -62,13 +63,10 @@ const CreateModal = ({ onClose }) => {
         title: title,
         description: description,
         author_name: authorName,
-        // schedule: { creation_time: "2023-08-01T09:15:00" },
         schedule: { creation_time: preparedDate },
       };
 
-      dispatch(addTasks(oneTask));
-      console.log(tasks);
-      console.log("add");
+      dispatch(addTask(oneTask));
       onClose();
     }
   };
@@ -84,13 +82,7 @@ const CreateModal = ({ onClose }) => {
   };
 
   return (
-    <div
-      //   onClick={(e) => {
-      //     e.stopPropagation();
-      //     onClose();
-      //   }}
-      className="modal"
-    >
+    <div className="modal">
       <div className="modal_body">
         <div className="modal_header">Новая задача</div>
         <div className="modal_input">
@@ -103,9 +95,6 @@ const CreateModal = ({ onClose }) => {
         <div className="modal_input">
           <div className="modal_author_name">Исполнитель</div>
           <div className="dropdown">
-            {/* <button className="dropbtn">{authorName}</button> */}
-            {/* <div className="dropdown-content">
-            </div> */}
             {getDropdownItems(authors, setAuthorName, authorName)}
           </div>
         </div>
@@ -119,18 +108,12 @@ const CreateModal = ({ onClose }) => {
         <div className="modal_input">
           <div className="modal_status">Cостояние: </div>
           <div className="dropdown">
-            {/* <button className="dropbtn">{status}</button> */}
-            {/* <div className="dropdown-content">
-            </div> */}
             {getDropdownItems(statuses, setStatus, status)}
           </div>
         </div>
         <div className="modal_input">
           <div className="modal_priority">Приоритет: {}</div>
           <div className="dropdown">
-            {/* <button className="dropbtn">{priority}</button> */}
-            {/* <div className="dropdown-content">
-            </div> */}
             {getDropdownItems(priorities, setPriority, priority)}
           </div>
         </div>
@@ -141,7 +124,7 @@ const CreateModal = ({ onClose }) => {
           </div>
           <div
             onClick={() => {
-              addTask();
+              taskFormation();
             }}
           >
             <img className="modul_btn" src={save} alt="" />

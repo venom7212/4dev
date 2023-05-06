@@ -1,17 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
-import { BrowserRouter, Route, Switch, useNavigate } from "react-router-dom";
-
-// import { useSelector, useDispatch } from "react-redux";
-// import Deck from "./Deck";
-
-// import {
-//   increaseRealHp,
-// } from "../redux/features/stats/statsSlice.js";
-// import Detected from "./Detected";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Error = () => {
-  // forceUpdate()
-  //   const defSlot = useSelector((state) => state.stats.defSlot);
   const navigate = useNavigate();
 
   return (

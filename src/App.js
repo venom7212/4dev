@@ -1,6 +1,6 @@
 import "./App.css";
 import ReactDOM from "react-dom/client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Login from "./components/Login";
@@ -10,11 +10,12 @@ import { Routes, Route, useNavigate,useLocation } from "react-router-dom";
 import { setIsAuthorized } from "../src/redux/features/tasksSlice";
 
 const App = () => {
-  const isAuthorized = useSelector((state) => state.state.isAuthorized);
-  const loginCheck = localStorage.getItem("current_login") !== null;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+
+  const isAuthorized = useSelector((state) => state.state.isAuthorized);
+  const loginCheck = localStorage.getItem("current_login") !== null;
 
   useEffect(() => {
     if (loginCheck === true) {
@@ -34,7 +35,6 @@ const App = () => {
       navigate("/error");
     }
   }, [location]);
-
 
   return (
     <div className="App">

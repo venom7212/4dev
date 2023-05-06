@@ -147,26 +147,18 @@ export const tasksSlice = createSlice({
     setIsAuthorized: (state, action) => {
       state.isAuthorized = action.payload;
     },
-    addTasks: (state, action) => {
+    addTask: (state, action) => {
       state.tasks = [...state.tasks, action.payload];
       return state;
     },
     deleteTask: (state, action) => {
       const { tasks } = state;
       const idDelete = action.payload;
-
-      console.log("redux", idDelete);
-
       const filteredTasks = tasks.filter((task) => task.id !== idDelete);
       state.tasks = filteredTasks;
-
-      // tasks = filteredTasks
     },
-
     updateTask: (state, action) => {
-      // const  id = action.payload;
       const { id, statusId,priorityId } = action.payload;
-      console.log(id,statusId,priorityId)
       const taskIndex = state.tasks.findIndex((task) => task.id === id);
       if (taskIndex !== -1) {
         state.tasks[taskIndex] = {
@@ -180,7 +172,7 @@ export const tasksSlice = createSlice({
   },
 });
 
-export const { setIsAuthorized, addTasks, deleteTask, updateTask } =
+export const { setIsAuthorized, addTask, deleteTask, updateTask } =
   tasksSlice.actions;
 
 export default tasksSlice.reducer;
