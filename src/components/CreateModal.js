@@ -33,6 +33,8 @@ const CreateModal = ({ onClose }) => {
 
   const inputHandlerDropDownUniversal = (firstKey, setter) => {
     setter(firstKey);
+    console.log(status,'status')
+    console.log(priority,'priority')
   };
 
   const addTask = () => {
@@ -65,7 +67,7 @@ const CreateModal = ({ onClose }) => {
           key={index}
           onClick={() => inputHandlerDropDownUniversal(firstValue, setter)}
         >
-          {firstValue}
+          {firstKey}
         </div>
       );
     });

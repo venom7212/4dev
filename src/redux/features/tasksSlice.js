@@ -6,7 +6,7 @@ export const tasksSlice = createSlice({
     isAuthorized: false,
     users: [{ login: "admin", password: "admin" }],
     // status: [{ 0: "в очереди" }, { 1: "в работе" }, { 2: "выполнено" }],
-    status: [{ "в очереди": 0 }, { "в работе": 1 }, { выполнено: 2 }],
+    status: [{ "в очереди": 0 }, { "в работе": 1 }, { "выполнено": 2 }],
     // priority: [{ 0: "низкий" }, { 1: "средний" }, { 2: "высокий" }],
     priority: [{ низкий: 0 }, { средний: 1 }, { высокий: 2 }],
     tasks: [
@@ -153,7 +153,6 @@ export const tasksSlice = createSlice({
       state.tasks = [...state.tasks, action.payload];
       return state;
     },
-    //необходимо удалять по уникаольному, id их надо генерировать при add
     deleteTask: (state, action) => {
       const { tasks } = state;
       const idDelete = action.payload;
@@ -165,19 +164,16 @@ export const tasksSlice = createSlice({
 
       // tasks = filteredTasks
     },
-    //необходимо находить по уникаольному, id их надо генерировать при add
 
     updateStatusTask: (state, action) => {
       // const  id = action.payload;
-      const { id, status,priority } = action.payload;
-      console.log("redux", id,status,priority);
-      
+      const { id, statusState,priorityState } = action.payload;
       const taskIndex = state.tasks.findIndex((task) => task.id === id);
       if (taskIndex !== -1) {
         state.tasks[taskIndex] = {
           ...state.tasks[taskIndex],
-          status: status,
-          priority: priority,
+          status: statusState,
+          priority: priorityState,
         };
       }
       return state;

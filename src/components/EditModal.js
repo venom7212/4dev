@@ -20,9 +20,8 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
 
   const inputHandlerDropDownUniversal = (firstValue, setter) => {
     setter(firstValue);
-    console.log('setterVlaue',firstValue)
-    console.log('statusState',statusState)
-    console.log('priorityState',priorityState)
+    console.log("statusState",statusState)
+    console.log("priorityState",priorityState)
   };
 
   const universalGen = (array, setter) => {
@@ -36,7 +35,7 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
             inputHandlerDropDownUniversal(firstValue, setter);
           }}
         >
-          {firstValue}
+          {firstKey}
         </div>
       );
     });
@@ -54,13 +53,10 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
         <div className="modal_author_name">{author_name}</div>
         <div className="modal_content">Описание задачи</div>
         <div className="modal_content_text">{description}</div>
-        {/* <div className="modal_status">Cостояние: {status}</div> */}
-        {/* <div className="modal_priority">Приоритет: {priority}</div> */}
         <div className="modal_input">
           <div className="modal_status">Cостояние: </div>
           <div className="dropdown">
             <button className="dropbtn">
-              {/* {status} */}
               {statusState === 0
                 ? "в очереди"
                 : statusState === 1
@@ -71,9 +67,6 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
             </button>
             <div className="dropdown-content">
               {universalGen(statusTask, setStatus)}
-              {/* <a onClick={(e) => setStatus(0)}>в очереди</a>
-              <a onClick={(e) => setStatus(1)}>в работе</a>
-              <a onClick={(e) => setStatus(2)}>выполнено</a> */}
             </div>
           </div>
         </div>
@@ -81,7 +74,6 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
           <div className="modal_priority">Приоритет: {}</div>
           <div className="dropdown">
             <button className="dropbtn">
-              {/* {priority} */}
               {priorityState === 0
                 ? "низий"
                 : priorityState === 1
@@ -92,16 +84,6 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
             </button>
             <div className="dropdown-content">
               {universalGen(priorityTask, setPriority)}
-
-              {/* <a onClick={(e) => inputHandlerDropDown(e, setPriority)}>
-                низкий
-              </a>
-              <a onClick={(e) => inputHandlerDropDown(e, setPriority)}>
-                средний
-              </a>
-              <a onClick={(e) => inputHandlerDropDown(e, setPriority)}>
-                высокий
-              </a> */}
             </div>
           </div>
         </div>
