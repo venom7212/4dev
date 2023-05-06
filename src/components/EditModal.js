@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteTask, updateTask } from "../redux/features/tasksSlice.js";
 import deleteJPG from "../img/deleteJPG.jpg";
@@ -11,20 +11,24 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
   const priorities = useSelector((state) => state.state.priorities);
 
   const { id, status, priority, title, description, schedule, author_name } =
-  data;
+    data;
   const [statusState, setStatus] = useState("");
   const [priorityState, setPriority] = useState("");
 
   const updateTaskFunction = () => {
-    const foundStatus = statuses.find(
-      (item, index) => item[index] == statusState
-    );
-    const statusId = Number(Object.keys(foundStatus)[0]);
-    const foundPriority = priorities.find(
-      (item, index) => item[index] == priorityState
-    );
-    const priorityId = Number(Object.keys(foundPriority)[0]);
-    dispatch(updateTask({ id, statusId, priorityId }));
+    if (statusState !== "" || priorityState !== "") {
+      const foundStatus = statuses.find(
+        (item, index) => item[index] == statusState
+      );
+      const statusId = Number(Object.keys(foundStatus)[0]);
+      const foundPriority = priorities.find(
+        (item, index) => item[index] == priorityState
+      );
+      const priorityId = Number(Object.keys(foundPriority)[0]);
+      dispatch(updateTask({ id, statusId, priorityId }));
+    }else{
+      onClose();
+    }
   };
 
   const getDropdownItems = (array, setter, state) => {
@@ -57,7 +61,6 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
             onClick={(e) => {
               e.stopPropagation();
               dispatch(deleteTask(id));
-              console.log("del");
               onClose();
             }}
           >
