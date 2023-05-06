@@ -3,9 +3,9 @@ import OneTask from "./OneTask";
 import DropDown from "./DropDown";
 
 const Container = ({ title, status, tasks }) => {
-  const [filter, setFilter] = useState("По дате (возрастание)");
+  const [filter, setFilter] = useState("По возрастанию");
 
-  const filterList = [{increase:"По дате (возрастание)"},{decrease:"По дате (убывание)"}]
+  const filterList = [{increase:"По возрастанию"},{decrease:"По убыванию"}]
   const classDivStyle = `${
     status === 0
       ? "in_queue"
@@ -23,13 +23,13 @@ const Container = ({ title, status, tasks }) => {
   const genTask = () => {
     return tasks
       .sort((a, b) => {
-        if (filter === "По дате (возрастание)") {
+        if (filter === "По возрастанию") {
           return Date.parse(a.schedule.creation_time) >
             Date.parse(b.schedule.creation_time)
             ? -1
             : 1;
         }
-        if (filter === "По дате (убывание)") {
+        if (filter === "По убыванию") {
           return Date.parse(a.schedule.creation_time) <
             Date.parse(b.schedule.creation_time)
             ? -1

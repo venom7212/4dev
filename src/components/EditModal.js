@@ -16,18 +16,20 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
   const [priorityState, setPriority] = useState("");
 
   const updateTaskFunction = () => {
-    if (statusState !== "" || priorityState !== "") {
+    if (statusState === "" || priorityState === "") {
+      onClose();
+      
+    } else {
       const foundStatus = statuses.find(
         (item, index) => item[index] == statusState
       );
       const statusId = Number(Object.keys(foundStatus)[0]);
+
       const foundPriority = priorities.find(
         (item, index) => item[index] == priorityState
       );
       const priorityId = Number(Object.keys(foundPriority)[0]);
       dispatch(updateTask({ id, statusId, priorityId }));
-    }else{
-      onClose();
     }
   };
 
