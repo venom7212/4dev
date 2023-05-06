@@ -13,8 +13,8 @@ const CreateModal = ({ onClose }) => {
   const lastId = parseInt(lastObject.id)
 
   const [id, setId] = useState(lastId+1);
-  const [status, setStatus] = useState("в очереди");
-  const [priority, setPriority] = useState("низкий");
+  const [status, setStatus] = useState(0);
+  const [priority, setPriority] = useState(0);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [authorName, setAuthorName] = useState("John Smith");

@@ -156,8 +156,11 @@ export const tasksSlice = createSlice({
     //необходимо удалять по уникаольному, id их надо генерировать при add
     deleteTask: (state, action) => {
       const { tasks } = state;
-      const titleDelete = action.payload;
-      const filteredTasks = tasks.filter((task) => task.title !== titleDelete);
+      const idDelete = action.payload;
+
+      console.log("redux", idDelete);
+
+      const filteredTasks = tasks.filter((task) => task.id !== idDelete);
       state.tasks = filteredTasks;
 
       // tasks = filteredTasks
@@ -165,9 +168,19 @@ export const tasksSlice = createSlice({
     //необходимо находить по уникаольному, id их надо генерировать при add
 
     updateStatusTask: (state, action) => {
-      const {title,status} = action.payload;
-      console.log('redux',title,status)
+      // const  id = action.payload;
+      const { id, status,priority } = action.payload;
+      console.log("redux", id,status,priority);
       
+      const taskIndex = state.tasks.findIndex((task) => task.id === id);
+      if (taskIndex !== -1) {
+        state.tasks[taskIndex] = {
+          ...state.tasks[taskIndex],
+          status: status,
+          priority: priority,
+        };
+      }
+      return state;
     },
   },
 });

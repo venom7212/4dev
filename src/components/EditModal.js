@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 // import Deck from "./Deck";
 
-import { deleteTask,updateStatusTask } from "../redux/features/tasksSlice.js";
+import { deleteTask, updateStatusTask } from "../redux/features/tasksSlice.js";
 // import Detected from "./Detected";
 
 const EditModal = ({ active, closeModal, data, onClose }) => {
@@ -16,10 +16,13 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
   const [priorityState, setPriority] = useState(priority);
 
   const dispatch = useDispatch();
-  console.log("editmodal", data);
+  // console.log("editmodal", data);
 
-  const inputHandlerDropDownUniversal = (firstKey, setter) => {
-    setter(firstKey);
+  const inputHandlerDropDownUniversal = (firstValue, setter) => {
+    setter(firstValue);
+    console.log('setterVlaue',firstValue)
+    console.log('statusState',statusState)
+    console.log('priorityState',priorityState)
   };
 
   const universalGen = (array, setter) => {
@@ -29,7 +32,9 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
       return (
         <div
           key={index}
-          onClick={() => {inputHandlerDropDownUniversal(firstValue, setter);dispatch(updateStatusTask(title,status))}}
+          onClick={() => {
+            inputHandlerDropDownUniversal(firstValue, setter);
+          }}
         >
           {firstValue}
         </div>
@@ -103,7 +108,7 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            dispatch(deleteTask(title));
+            dispatch(deleteTask(id));
             console.log("del");
             onClose();
           }}
@@ -113,6 +118,7 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
         <button
           onClick={(e) => {
             e.stopPropagation();
+            dispatch(updateStatusTask({id,statusState,priorityState}));
             onClose();
           }}
         >
