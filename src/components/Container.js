@@ -14,7 +14,9 @@ const Container = ({ title,classDiv, status, tasks }) => {
     };
   return (
     <div className={classDivStyle}>
+      <div className="one_task_header">
       {title}
+      </div>
       {genTask()}
     </div>
   );

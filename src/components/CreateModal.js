@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addTasks } from "../redux/features/tasksSlice";
 import decline from "../img/decline.jpg";
 import save from "../img/save.jpg";
+import DropDown from "./DropDown";
 
 const CreateModal = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -25,6 +26,16 @@ const CreateModal = ({ onClose }) => {
   };
 
   const addTask = () => {
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const hrs = date.getHours();
+    const minutes = date.getMinutes();
+    const preparedDate = `${year}-${month < 10 ? 0 : ""}${month}-${
+      day < 10 ? 0 : ""
+    }${day}'T'${hrs}:${minutes}`;
+    // schedule: { creation_time: "2023-08-01T09:15:00" },
     const foundStatus = statuses.find((item, index) => item[index] == status);
     const statusId = Object.keys(foundStatus)[0];
 
@@ -40,8 +51,10 @@ const CreateModal = ({ onClose }) => {
       title: title,
       description: description,
       author_name: authorName,
-      schedule: { creation_time: "2023-08-01T09:15:00" },
+      // schedule: { creation_time: "2023-08-01T09:15:00" },
+      schedule: { creation_time: preparedDate },
     };
+
     dispatch(addTasks(oneTask));
     console.log(tasks);
     console.log("add");
@@ -51,7 +64,21 @@ const CreateModal = ({ onClose }) => {
   useEffect(() => {
     setId(tasks.length);
   }, [tasks]);
+  const [selectedOption, setSelectedOption] = useState("");
 
+  const getDropdownItems2 = (array, setter,state) => {
+    // const [_, value] = Object.entries(item)[0];
+    return (
+      <DropDown
+        options={array}
+        selectedOption={state}
+        setOption={setter}
+      />
+      // <div key={index} onClick={() => setter(value)}>
+      //   {value}
+      // </div>
+    );
+  };
   const getDropdownItems = (array, setter) => {
     return array.map((item, index) => {
       const [_, value] = Object.entries(item)[0];
@@ -74,7 +101,7 @@ const CreateModal = ({ onClose }) => {
       <div className="modal_body">
         <div className="modal_header">Новая задача</div>
         <div className="modal_input">
-          <div className="modal_title">Название</div>
+          <div className="modal_input_title">Название</div>
           <input
             onChange={(e) => inputHandler(e, setTitle)}
             className="modal_modal_title_input"
@@ -83,10 +110,11 @@ const CreateModal = ({ onClose }) => {
         <div className="modal_input">
           <div className="modal_author_name">Исполнитель</div>
           <div className="dropdown">
-            <button className="dropbtn">{authorName}</button>
-            <div className="dropdown-content">
-              {getDropdownItems(authors, setAuthorName)}
-            </div>
+            {/* <button className="dropbtn">{authorName}</button> */}
+            {/* <div className="dropdown-content">
+            </div> */}
+            {getDropdownItems2(authors, setAuthorName,authorName)}
+
           </div>
         </div>
         <div className="modal_content_textarea">
@@ -99,21 +127,24 @@ const CreateModal = ({ onClose }) => {
         <div className="modal_input">
           <div className="modal_status">Cостояние: </div>
           <div className="dropdown">
-            <button className="dropbtn">{status}</button>
-            <div className="dropdown-content">
-              {getDropdownItems(statuses, setStatus)}
-            </div>
+            {/* <button className="dropbtn">{status}</button> */}
+            {/* <div className="dropdown-content">
+            </div> */}
+            {getDropdownItems2(statuses, setStatus,status)}
+
           </div>
         </div>
         <div className="modal_input">
           <div className="modal_priority">Приоритет: {}</div>
           <div className="dropdown">
-            <button className="dropbtn">{priority}</button>
-            <div className="dropdown-content">
-              {getDropdownItems(priorities, setPriority)}
-            </div>
+            {/* <button className="dropbtn">{priority}</button> */}
+            {/* <div className="dropdown-content">
+            </div> */}
+            {getDropdownItems2(priorities, setPriority,priority)}
+
           </div>
         </div>
+
         <div className="modul_footer">
           <div onClick={onClose}>
             <img className="modul_btn" src={decline} alt="" />

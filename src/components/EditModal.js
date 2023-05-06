@@ -11,22 +11,26 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
     data;
   const statuses = useSelector((state) => state.state.statuses);
   const priorities = useSelector((state) => state.state.priorities);
+  const tasks = useSelector((state) => state.state.tasks);
 
   const [statusState, setStatus] = useState(status);
   const [priorityState, setPriority] = useState(priority);
+
 
   const dispatch = useDispatch();
   // console.log("editmodal", data);
 
   const inputHandlerDropDownUniversal = (firstValue, setter) => {
-    setter(firstValue);
+    setter(parseInt(firstValue));
     console.log("statusState", statusState);
     console.log("priorityState", priorityState);
+    console.log("tasks", tasks);
   };
 
   const universalGen = (array, setter) => {
     return array.map((item, index) => {
       const [key, value] = Object.entries(item)[0];
+      
       return (
         <div
           key={index}
@@ -39,6 +43,7 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
       );
     });
   };
+
   return (
     <div
       // onClick={(e) => {
@@ -49,38 +54,23 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
     >
       <div className="modal_body">
         <div className="modal_title">{title}</div>
-        <div className="modal_author_name">{author_name}</div>
-        <div className="modal_content">Описание задачи</div>
+        <div className="modal_author_name">Исполнитель: {author_name}</div>
+        <div className="modal_content">Описание задачи: </div>
         <div className="modal_content_text">{description}</div>
         <div className="modal_input">
           <div className="modal_status">Cостояние: </div>
           <div className="dropdown">
-            <button className="dropbtn">
-              {statusState === 0
-                ? "в очереди"
-                : statusState === 1
-                ? "в работе"
-                : statusState === 2
-                ? "выполнено"
-                : "в очереди"}
-            </button>
+            <button className="dropbtn">{statusState === 0 ? "в очереди" : statusState === 1 ? "в работе" : statusState === 2 ? "выполнено" : ""}</button>
             <div className="dropdown-content">
               {universalGen(statuses, setStatus)}
+              {/* {getDropdownItems(authors, setAuthorName)} */}
             </div>
           </div>
         </div>
         <div className="modal_input">
           <div className="modal_priority">Приоритет: {}</div>
           <div className="dropdown">
-            <button className="dropbtn">
-              {priorityState === 0
-                ? "низий"
-                : priorityState === 1
-                ? "средний"
-                : priorityState === 2
-                ? "высокий"
-                : "низкий"}
-            </button>
+          <button className="dropbtn">{priorityState === 0 ? "низкий" : priorityState === 1 ? "средний" : priorityState === 2 ? "высокий" : ""}</button>
             <div className="dropdown-content">
               {universalGen(priorities, setPriority)}
             </div>

@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-// import Deck from "./Deck";
 import {  } from "../redux/features/tasksSlice";
-// import {
-//   increaseRealHp,
-// } from "../redux/features/stats/statsSlice.js";
-// import Detected from "./Detected";
+import enter from "../img/enter.jpg";
+
 
 const Login = () => {
   const users = useSelector((state) => state.state.users);
@@ -72,14 +69,12 @@ const Login = () => {
         className="login_form_password"
         placeholder="ПАРОЛЬ"
       ></input>
-      <button
-        onClick={() => {
+      <div>
+        <img  onClick={() => {
           loginFunction(login, password);
         }}
-        className="login_form_enter"
-      >
-        ВОЙТИ
-      </button>
+        className="login_form_enter" src={enter} alt=""/>
+      </div>
     </div>
   );
 };
