@@ -34,7 +34,7 @@ const App = () => {
     if (location.pathname === "/tasks" && loginCheck===false && isAuthorized === false) {
       navigate("/error");
     }
-  }, [location]);
+  }, [location,isAuthorized]);
 
   return (
     <div className="App">
