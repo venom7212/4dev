@@ -31,7 +31,7 @@ const App = () => {
 
   useEffect(() => {
     const loginCheck = localStorage.getItem('current_login')!== null;
-    if (location.pathname === "/tasks" && loginCheck===false) {
+    if (location.pathname === "/tasks" && loginCheck===false && isAuthorized === false) {
       navigate("/error");
     }
   }, [location]);
