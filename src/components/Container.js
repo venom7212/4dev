@@ -23,13 +23,13 @@ const Container = ({ title, status, tasks }) => {
   const genTask = () => {
     return tasks
       .sort((a, b) => {
-        if (filter === "По возрастанию") {
+        if (filter === "По убыванию") {
           return Date.parse(a.schedule.creation_time) >
             Date.parse(b.schedule.creation_time)
             ? -1
             : 1;
         }
-        if (filter === "По убыванию") {
+        if (filter === "По возрастанию") {
           return Date.parse(a.schedule.creation_time) <
             Date.parse(b.schedule.creation_time)
             ? -1
