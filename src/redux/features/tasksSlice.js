@@ -158,13 +158,14 @@ export const tasksSlice = createSlice({
       state.tasks = filteredTasks;
     },
     updateTask: (state, action) => {
-      const { id, statusId,priorityId } = action.payload;
+      const updatedFileds = action.payload;
+      const { id, statusId, priorityId } = updatedFileds;
       const taskIndex = state.tasks.findIndex((task) => task.id === id);
       if (taskIndex !== -1) {
         state.tasks[taskIndex] = {
           ...state.tasks[taskIndex],
-          status: statusId,
-          priority: priorityId,
+          ...(statusId !== undefined ? { status: statusId } : {}),
+          ...(priorityId !== undefined ? { priority: priorityId } : {}),
         };
       }
       return state;

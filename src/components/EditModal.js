@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteTask, updateTask } from "../redux/features/tasksSlice.js";
 import deleteJPG from "../img/deleteJPG.jpg";
@@ -16,21 +16,31 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
   const [priorityState, setPriority] = useState("");
 
   const updateTaskFunction = () => {
-    if (statusState === "" || priorityState === "") {
-      onClose();
-      
-    } else {
-      const foundStatus = statuses.find(
-        (item, index) => item[index] == statusState
-      );
+    let updatedFileds = {
+      id,
+    };
+    const foundStatus = statuses.find(
+      (item, index) => item[index] == statusState
+    );
+    if (foundStatus) {
       const statusId = Number(Object.keys(foundStatus)[0]);
-
-      const foundPriority = priorities.find(
-        (item, index) => item[index] == priorityState
-      );
-      const priorityId = Number(Object.keys(foundPriority)[0]);
-      dispatch(updateTask({ id, statusId, priorityId }));
+      updatedFileds = {
+        ...updatedFileds,
+        statusId,
+      };
     }
+
+    const foundPriority = priorities.find(
+      (item, index) => item[index] == priorityState
+    );
+    if (foundPriority) {
+      const priorityId = Number(Object.keys(foundPriority)[0]);
+      updatedFileds = {
+        ...updatedFileds,
+        priorityId,
+      };
+    }
+    dispatch(updateTask(updatedFileds));
   };
 
   const getDropdownItems = (array, setter, state) => {
@@ -38,6 +48,8 @@ const EditModal = ({ active, closeModal, data, onClose }) => {
       <DropDown options={array} selectedOption={state} setOption={setter} />
     );
   };
+
+
 
   return (
     <div className="modal">
