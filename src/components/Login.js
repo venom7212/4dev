@@ -54,13 +54,13 @@ const Login = () => {
         onChange={(e) => inputHandler(e, setLogin)}
         value={login}
         className="login_form_login"
-        placeholder="ЛОГИН"
+        placeholder="ЛОГИН-admin"
       ></input>
       <input
         onChange={(e) => inputHandler(e, setPassword)}
         value={password}
         className="login_form_password"
-        placeholder="ПАРОЛЬ"
+        placeholder="ПАРОЛЬ-admin"
       ></input>
       <div>
         <img
